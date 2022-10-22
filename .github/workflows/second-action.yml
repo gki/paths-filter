@@ -1,0 +1,34 @@
+name: "Second action"
+on:
+  workflow_run:
+    workflows: ["First action"]
+    types: [completed]
+  branches:
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: |
+        npm install
+        npm run all
+
+  test-inline:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    steps:
+    - uses: actions/checkout@v3
+    - uses: ./
+      id: filter
+      with:
+        filters: |
+          error:
+            - not_existing_path/**/*
+          any:
+            - "**/*"
+    - name: filter-test
+      if: steps.filter.outputs.any != 'true' || steps.filter.outputs.error == 'true'
+      run: exit 1
