@@ -27,6 +27,8 @@ async function run(): Promise<void> {
     const listFiles = core.getInput('list-files', {required: false}).toLowerCase() || 'none'
     const initialFetchDepth = parseInt(core.getInput('initial-fetch-depth', {required: false})) || 10
 
+    core.info(github.context.eventName)
+
     if (!isExportFormat(listFiles)) {
       core.setFailed(`Input parameter 'list-files' is set to invalid value '${listFiles}'`)
       return
