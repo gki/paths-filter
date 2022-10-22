@@ -14,6 +14,10 @@ type ExportFormat = 'none' | 'csv' | 'json' | 'shell' | 'escape'
 
 async function run(): Promise<void> {
   try {
+    console.log('start run console')
+    core.info('start run core.info')
+    core.debug('start run core.debug')
+    core.warning('start run core.warning')
     const workingDirectory = core.getInput('working-directory', {required: false})
     if (workingDirectory) {
       process.chdir(workingDirectory)
