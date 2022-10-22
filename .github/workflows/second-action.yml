@@ -3,8 +3,8 @@ on:
   workflow_run:
     workflows: ["First action"]
     types: [completed]
-  branches:
-    - master
+    branches:
+      - master
 
 jobs:
   build:
