@@ -14,10 +14,8 @@ type ExportFormat = 'none' | 'csv' | 'json' | 'shell' | 'escape'
 
 async function run(): Promise<void> {
   try {
-    console.log('start run console')
-    core.info('start run core.info')
-    core.debug('start run core.debug')
-    core.warning('start run core.warning')
+    console.log(github.context.eventName)
+    console.log(github.context)
     const workingDirectory = core.getInput('working-directory', {required: false})
     if (workingDirectory) {
       process.chdir(workingDirectory)
@@ -30,8 +28,6 @@ async function run(): Promise<void> {
     const filtersYaml = isPathInput(filtersInput) ? getConfigFileContent(filtersInput) : filtersInput
     const listFiles = core.getInput('list-files', {required: false}).toLowerCase() || 'none'
     const initialFetchDepth = parseInt(core.getInput('initial-fetch-depth', {required: false})) || 10
-
-    core.info(github.context.eventName)
 
     if (!isExportFormat(listFiles)) {
       core.setFailed(`Input parameter 'list-files' is set to invalid value '${listFiles}'`)
@@ -102,6 +98,8 @@ async function getChangedFiles(token: string, base: string, ref: string, initial
 async function getChangedFilesFromGit(base: string, head: string, initialFetchDepth: number): Promise<File[]> {
   const defaultBranch = github.context.payload.repository?.default_branch
 
+  // TODO: in the same branch, beforeSha should be HEAD~1 commit even if event was workflow_run
+  // TODO: in PR branch, beforeSha should be target branch of the PR.
   const beforeSha =
     github.context.eventName === 'push' ? (github.context.payload as Webhooks.WebhookPayloadPush).before : null
 
