@@ -119,12 +119,12 @@ async function getChangedFilesFromGit(base: string, head: string, initialFetchDe
   const isBaseSha = git.isGitSha(base)
   const isBaseSameAsHead = base === head
 
-  core.info(`base=${base}`)
-  core.info(`head=${head}`)
-  core.info(`isBaseSha=${isBaseSha}`)
-  core.info(`isBaseSameAsHead=${isBaseSameAsHead}`)
-  core.info(`beforeSha=${beforeSha}`)
-  core.info(`github.context.eventName=${github.context.eventName}`)
+  console.log(`base=${base}`)
+  console.log(`head=${head}`)
+  console.log(`isBaseSha=${isBaseSha}`)
+  console.log(`isBaseSameAsHead=${isBaseSameAsHead}`)
+  console.log(`beforeSha=${beforeSha}`)
+  console.log(`github.context.eventName=${github.context.eventName}`)
 
   // If base is commit SHA we will do comparison against the referenced commit
   // Or if base references same branch it was pushed to, we will do comparison against the previously pushed commit
