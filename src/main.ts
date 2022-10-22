@@ -17,7 +17,7 @@ async function run(): Promise<void> {
     console.log(github.context.eventName)
     console.log(github.context)
 
-    console.log(github.context.payload.worflow_run)
+    console.log(github.context.payload.workflow_run)
     const workingDirectory = core.getInput('working-directory', {required: false})
     if (workingDirectory) {
       process.chdir(workingDirectory)
