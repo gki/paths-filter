@@ -13,9 +13,10 @@ jobs:
       pull-requests: read
     steps:
     - uses: actions/checkout@v3
-    - run: |
-      npm install
-      npm run all
+    - name: build
+      run: |
+        npm install
+        npm run all
 
     - uses: ./
       id: filter
