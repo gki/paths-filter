@@ -15,7 +15,7 @@ jobs:
         npm install
         npm run all
 
-  test-inline:
+  test:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: read
@@ -25,10 +25,10 @@ jobs:
       id: filter
       with:
         filters: |
-          error:
-            - not_existing_path/**/*
-          any:
-            - "**/*"
+          src:
+            - src/**
+          tests:
+            - __tests__/**
     - name: filter-test
-      if: steps.filter.outputs.any != 'true' || steps.filter.outputs.error == 'true'
-      run: exit 1
+      run: |
+        echo '${{ toJSON(steps.filter.outputs) }}'
